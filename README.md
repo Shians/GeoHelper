@@ -1,6 +1,6 @@
 # GEO Helper Script
-This script generates GEO submission v2.1 template compliant annotations for
-fastq and fastq.gz files.
+This script generates GEO high-throughput sequencing submission v2.1 template
+compliant annotations for fastq and fastq.gz files.
 
 ## Requirements
 macOS or Linux bases system with ```gzip``` and ```head``` utilities available.
