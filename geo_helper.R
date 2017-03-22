@@ -46,5 +46,5 @@ get_raw_files_info <- function() {
                      instrument = " ",
                      read.length = read_lengths)
 
-    cat(paste(apply(df, 1, function(x) paste(x, collapse = "\t")), collapse = "\n"))
+    paste(apply(df, 1, function(x) paste(x, collapse = "\t")), collapse = "\n")
 }
