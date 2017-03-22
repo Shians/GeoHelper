@@ -6,7 +6,7 @@ compliant annotations for fastq and fastq.gz files.
 macOS or Linux bases system with ```gzip``` and ```head``` utilities available.
 
 ## Usage
-Inside the directory containing all the fastq files:
+With R inside the directory containing all the fastq files:
 ```
 source("https://github.com/Shians/GeoHelper/raw/master/geo_helper.R")
 cat(get_raw_files_info())
