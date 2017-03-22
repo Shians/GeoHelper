@@ -37,12 +37,12 @@ get_raw_files_info <- function() {
 
     guess_paired_status <- function(x) {
         guess_func <- function(fname) {
-            if (grepl("R1.fastq", fname)) {
+            if (str_detect(fname, "R1.fastq")) {
                 partner <- gsub("R1.fastq", "R2.fastq", fname)
                 if (partner %in% x) {
                     return("paired")
                 }
-            } else if (grepl("R2.fastq", fname)) {
+            } else if (str_detect(fname, "R2.fastq")) {
                 partner <- gsub("R2.fastq", "R1.fastq", fname)
                 if (partner %in% x) {
                     return("paired")
