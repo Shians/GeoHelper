@@ -9,5 +9,7 @@ macOS or Linux bases system with ```gzip``` and ```head``` utilities available.
 Inside the directory containing all the fastq files:
 ```
 source("https://github.com/Shians/GeoHelper/raw/master/geo_helper.R")
-get_raw_files_info()
+cat(get_raw_files_info())
 ```
+The printed output should be suitable for copy-pasting into the GEO template 
+spreadsheet
