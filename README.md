@@ -12,4 +12,10 @@ source("https://github.com/Shians/GeoHelper/raw/master/geo_helper.R")
 cat(get_raw_files_info())
 ```
 The printed output should be suitable for copy-pasting into the GEO template 
-spreadsheet
+spreadsheet.
+
+macOS users can use
+```
+cat(get_raw_files_info(), file = pipe("pbcopy"))
+```
+to directly output into the clipboard for immediate pasting into excel.
