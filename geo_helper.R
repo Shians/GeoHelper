@@ -11,16 +11,8 @@ get_raw_files_info <- function() {
         filter(dir(), function(x) str_detect(x, ".fastq"))
     }
 
-    get_reads <- function(x, n = 100) {
-        is_gzipped <- function(x) str_detect(x, ".fastq.gz")
-
-        if (is_gzipped(x)) {
-            # -q in gzip to suppress broken pipe error
-            cmd <- paste("gzip -cdq", x, "| head -n", n * 4)
-            output <- system(cmd, intern = TRUE, ignore.stderr = TRUE)
-        } else {
-            output <- readLines(x, n = n * 4)
-        }
+    get_reads <- function(x, n = 200) {
+        output <- readLines(x, n = n * 4)
 
         output[(1:n)*4 - 2]
     }
