@@ -58,12 +58,17 @@ get_raw_files_info <- function() {
     md5sums <- tools::md5sum(fastq_files)
     paired_status <- guess_paired_status(fastq_files)
 
-    df <- data.frame(file.name = fastq_files,
-                     file.type = "fastq",
-                     file.checksum = md5sums,
-                     instrument = " ",
-                     read.length = read_lengths,
-                     paired.status = paired_status)
+    df <- data.frame(
+        file.name = fastq_files,
+        file.type = "fastq",
+        file.checksum = md5sums,
+        instrument = " ",
+        read.length = read_lengths,
+        paired.status = paired_status
+    )
 
-    paste(apply(df, 1, function(x) paste(x, collapse = "\t")), collapse = "\n")
+    cat(
+        paste(apply(df, 1, function(x) paste(x, collapse = "\t")), collapse = "\n"),
+        "\n"
+    )
 }
