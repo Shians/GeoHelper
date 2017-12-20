@@ -51,7 +51,7 @@ get_instrument <- function(x) {
     header <- get_reads(x, 1)[1]
 
     if (header[1] != "@") {
-        return("Unknow")
+        return("Unknown")
     }
 
     fields <- unlist(strsplit(header, ":"))
