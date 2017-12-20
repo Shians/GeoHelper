@@ -106,8 +106,5 @@ get_raw_files_info <- function() {
         paired.status = paired_status
     )
 
-    cat(
-        paste(apply(df, 1, function(x) paste(x, collapse = "\t")), collapse = "\n"),
-        "\n"
-    )
+    paste(apply(df, 1, function(x) paste(x, collapse = "\t")), collapse = "\n")
 }
