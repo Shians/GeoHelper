@@ -50,7 +50,8 @@ get_instrument <- function(x) {
 
     header <- get_reads(x, 1)[1]
 
-    if (header[1] != "@") {
+    if (substr(header, 1, 1) != "@") {
+        # header should start with "@"
         return("Unknown")
     }
 
