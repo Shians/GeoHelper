@@ -48,7 +48,7 @@ get_instrument <- function(x) {
     }
 
 
-    header <- get_reads(x, 1)[1]
+    header <- readLines(x, n = 1)
 
     if (substr(header, 1, 1) != "@") {
         # header should start with "@"
