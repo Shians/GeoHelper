@@ -2,22 +2,27 @@ str_detect <- function(x, pattern) {
     grepl(pattern, x)
 }
 
-get_fastq_files <- function() {
+get_fastq_files <- function(verbose = FALSE) {
     filter <- function(x, f) {
         x[f(x)]
     }
+    
+    cat("Getting fastq files...\n")
 
     filter(dir(), function(x) str_detect(x, ".fastq"))
 }
 
-get_reads <- function(x, n = 200) {
+get_reads <- function(x, n = 200, verbose = FALSE) {
+    if (verbose) {
+        cat("Getting ", n, " reads from: ", x, "...\n", sep = "")
+    }
     output <- readLines(x, n = n * 4)
 
     output[(1:n)*4 - 2]
 }
 
 # instrument information taken from https://github.com/10XGenomics/supernova/blob/master/tenkit/lib/python/tenkit/illumina_instrument.py#L12-L45
-get_instrument <- function(x) {
+get_instrument <- function(x, verbose = FALSE) {
     guess_instrument <- function(x) {
         instruments_df <- data.frame(
             rbind(
@@ -62,17 +67,25 @@ get_instrument <- function(x) {
     guess_instrument(instrument_id)
 }
 
-guess_read_len <- function(x) {
+guess_read_len <- function(x, verbose = FALSE) {
+    if (verbose) {
+        cat("Guessing read length...\n")
+    }
+
     mode <- function(x) {
         tab <- table(x)
         names(tab)[which(tab == max(tab))]
     }
 
-    reads <- get_reads(x, n = 200)
+    reads <- get_reads(x, n = 200, verbose = verbose)
     mode(nchar(reads))
 }
 
-guess_paired_status <- function(x) {
+guess_paired_status <- function(x, verbose = FALSE) {
+    if (verbose) {
+        cat("Guessing if paired end...\n")
+    }
+
     guess_func <- function(fname) {
         if (str_detect(fname, "R1.fastq")) {
             partner <- gsub("R1.fastq", "R2.fastq", fname)
@@ -87,15 +100,25 @@ guess_paired_status <- function(x) {
         }
         return("single")
     }
+
     sapply(x, guess_func)
 }
 
-get_raw_files_info <- function() {
-    fastq_files <- get_fastq_files()
+get_raw_files_info <- function(verbose = FALSE) {
+    if (verbose) {
+        cat("Guessing instrument...\n")
+    }
+    fastq_files <- get_fastq_files(verbose = verbose)
     md5sums <- tools::md5sum(fastq_files)
-    instrument <- sapply(fastq_files, get_instrument)
-    read_lengths <- sapply(fastq_files, guess_read_len)
-    paired_status <- guess_paired_status(fastq_files)
+    instrument <- sapply(
+        fastq_files,
+        function(x) get_instrument(x, verbose = verbose)
+    )
+    read_lengths <- sapply(
+        fastq_files,
+        function(x) guess_read_len(x, verbose = verbose)
+    )
+    paired_status <- guess_paired_status(fastq_files, verbose = verbose)
 
     df <- data.frame(
         file.name = fastq_files,
