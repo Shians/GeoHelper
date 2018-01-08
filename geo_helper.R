@@ -7,7 +7,9 @@ get_fastq_files <- function(verbose = FALSE) {
         x[f(x)]
     }
     
-    cat("Getting fastq files...\n")
+    if (verbose) {
+        cat("Getting fastq files...\n")
+    }
 
     filter(dir(), function(x) str_detect(x, "(.fastq.gz$|.fastq$)"))
 }
