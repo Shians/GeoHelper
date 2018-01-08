@@ -9,7 +9,7 @@ get_fastq_files <- function(verbose = FALSE) {
     
     cat("Getting fastq files...\n")
 
-    filter(dir(), function(x) str_detect(x, ".fastq"))
+    filter(dir(), function(x) str_detect(x, "(.fastq.gz$|.fastq$)"))
 }
 
 get_reads <- function(x, n = 200, verbose = FALSE) {
