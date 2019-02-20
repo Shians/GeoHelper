@@ -111,7 +111,13 @@ get_raw_files_info <- function(verbose = FALSE) {
         cat("Guessing instrument...\n")
     }
     fastq_files <- get_fastq_files(verbose = verbose)
-    md5sums <- tools::md5sum(fastq_files)
+    md5sums <- unlist(
+        parallel::mclapply(
+            X = fastq_files,
+            FUN = tools::md5sum,
+            mc.cores = parallel::detectCores()
+        )
+    )
     instrument <- sapply(
         fastq_files,
         function(x) get_instrument(x, verbose = verbose)
